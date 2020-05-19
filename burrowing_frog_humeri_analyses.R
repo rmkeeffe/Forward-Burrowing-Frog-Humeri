@@ -59,6 +59,17 @@ abline(v=0, h=0, lty=5)
 labs <- filelist
 textxy(x,y,labs)
 
+#Creating warp meshes of extreme PC values using an average humerus volume file
+#       warps used to create humerus silhouettes in figure 5
+
+average <- mshape(Y.gpa$coords)
+findMeanSpec(Y.gpa$coords)
+Anaxyrus_fowleri_coords <- readmulti.nts("Anaxyrus_fowleri.nts")
+Anaxyrus_fowleri <- read.ply("Anaxyrus_fowleri_UF3997_humerus.ply")
+averagemesh <- warpRefMesh(Anaxyrus_fowleri, Anaxyrus_fowleri_coords[,,1], average, color=NULL)
+PCA <- plotTangentSpace(Y.gpa$coords, axis1 = 1, axis2 = 2, warpgrids=TRUE, mesh=averagemesh, label=TRUE)
+PCA <- plotTangentSpace(Y.gpa$coords, axis1 = 2, axis2 = 1, warpgrids=TRUE, mesh=averagemesh, label=TRUE)
+
 #Re-running PCA on trimmed dataset in preparation for ANOVA 
 #       unspecified-burrowing species removed
 #       groupings reduced to forward and non-forward burrowing
